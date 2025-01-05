@@ -1,0 +1,104 @@
+models:
+  # Mastery Data
+  # Wilayah
+  Negara:
+    nama: string
+    kode: string
+    logo: string nullable
+    relationships:
+      hasMany: Provinsi, Instansi, InstansiLain
+
+  Provinsi:
+    nama: string
+    negara_id: id foreign:negaras
+    relationships:
+      belongsTo: Negara
+      hasMany: Kabupaten, Instansi, InstansiLain
+
+  Kabupaten:
+    nama: string
+    provinsi_id: id foreign:provinsis
+    relationships:
+      belongsTo: Provinsi
+      hasMany: Kecamatan, Instansi, InstansiLain
+
+  Kecamatan:
+    nama: string
+    kabupaten_id: id foreign:kabupatens
+    relationships:
+      belongsTo: Kabupaten
+      hasMany: Kelurahan, Instansi, InstansiLain
+
+  Kelurahan:
+    nama: string
+    kecamatan_id: id foreign:kecamatans
+    relationships:
+      belongsTo: Kecamatan
+      hasMany: Instansi, InstansiLain
+
+  Pimpinan:
+    nama: string
+    nip: string nullable
+    ttd: string nullable
+    foto: string nullable
+    relationships:
+      hasMany: Instansi
+
+  Instansi:
+    nama: string
+    nss: string nullable
+    npsn: string nullable
+    logo: string nullable
+    telepon: string nullable
+    email: string nullable
+    website: string nullable
+    no_sk_pendirian: string nullable
+    tanggal_pendirian: date nullable
+    pimpinan_id: id foreign:pimpinans
+    alamat: string nullable
+    negara_id: id foreign:negaras
+    provinsi_id: id foreign:provinsis
+    kabupaten_id: id foreign:kabupatens
+    kecamatan_id: id foreign:kecamatans
+    kelurahan_id: id foreign:kelurahans
+
+  InstansiLain:
+    nama: string
+    nss: string nullable
+    npsn: string nullable
+    logo: string nullable
+    telepon: string nullable
+    email: string nullable
+    website: string nullable
+    no_sk_pendirian: string nullable
+    tanggal_pendirian: date nullable
+    nama_pimpinan: string nullable
+    nip_pimpinan: string nullable
+    alamat: string nullable
+    negara_id: id foreign:negaras
+    provinsi_id: id foreign:provinsis
+    kabupaten_id: id foreign:kabupatens
+    kecamatan_id: id foreign:kecamatans
+    kelurahan_id: id foreign:kelurahans
+
+  # Siswa:
+  # Guru:
+  # Jenjang:
+  # Tingkat:
+  # Jurusan:
+  # Kelas:
+  # KelompokMataPelajaran:
+  # MataPelajaran:
+  # TahunPelajaran:
+  # Semester:
+  # # Keuangan Data
+  # JenisPembayaran:
+  # JenisPemasukkan:
+  # JenisPengeluaran:
+  # JenisKas:
+
+  # # Historycal Data
+  # SiswaKelas:
+  # Pembayaran:
+  # Pemasukkan:
+  # Pengeluaran:
