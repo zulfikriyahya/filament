@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
-class ProvinsisRelationManager extends RelationManager
+class ProvinsiRelationManager extends RelationManager
 {
     protected static string $relationship = 'provinsi';
 

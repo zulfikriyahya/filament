@@ -8,13 +8,9 @@ use App\Models\Negara;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Redis;
 use Filament\Forms\Components\Section;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\NegaraResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\NegaraResource\RelationManagers;
-use App\Filament\Resources\NegaraResource\RelationManagers\ProvinsisRelationManager;
+use App\Filament\Resources\NegaraResource\RelationManagers\ProvinsiRelationManager;
 use App\Filament\Resources\NegaraResource\RelationManagers\InstansiLainRelationManager;
 
 class NegaraResource extends Resource
@@ -51,7 +47,7 @@ class NegaraResource extends Resource
                                 '16:9' => '16:9',
                                 '9:16' => '9:16',
                             ])
-                            ->minSize('10')
+                            // ->minSize('10')
                             ->maxSize('2048'),
                     ])
                     ->columns([
@@ -66,13 +62,14 @@ class NegaraResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
-                    ->label('Bendera'),
+                    ->label('Bendera')
+                    ->width('60px'),
+                Tables\Columns\TextColumn::make('kode')
+                    ->label('Kode Negara'),
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama Negara')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kode')
-                    ->label('Kode Negara'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created At')
                     ->dateTime()
@@ -103,7 +100,7 @@ class NegaraResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ProvinsisRelationManager::class,
+            ProvinsiRelationManager::class,
             InstansiLainRelationManager::class,
         ];
     }
