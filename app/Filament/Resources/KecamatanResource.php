@@ -15,9 +15,9 @@ use App\Filament\Resources\KecamatanResource\RelationManagers\InstansiLainRelati
 class KecamatanResource extends Resource
 {
     protected static ?string $model = Kecamatan::class;
-    protected static ?string $label = 'Kecamatan';
+    protected static ?string $navigationLabel = 'Kecamatan';
     protected static ?string $navigationGroup = 'Wilayah';
-    protected static ?int $sort = 3;
+    protected static ?int $navigationSort = 3;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

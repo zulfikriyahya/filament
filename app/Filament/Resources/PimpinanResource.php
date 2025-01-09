@@ -17,9 +17,9 @@ use App\Filament\Resources\PimpinanResource\RelationManagers;
 class PimpinanResource extends Resource
 {
     protected static ?string $model = Pimpinan::class;
-    protected static ?string $label = 'Pimpinan';
+    protected static ?string $navigationLabel = 'Pimpinan';
     protected static ?string $navigationGroup = 'Instansi';
-    protected static ?int $sort = 0;
+    protected static ?int $navigationSort = 0;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -35,9 +35,11 @@ class PimpinanResource extends Resource
                             ->label('NIP'),
                         Forms\Components\DatePicker::make('periode_awal')
                             ->label('Periode Awal')
+                            ->maxDate(now())
                             ->required(),
                         Forms\Components\DatePicker::make('periode_akhir')
                             ->label('Periode Akhir')
+                            ->minDate(now())
                             ->required(),
                         Forms\Components\FileUpload::make('ttd')
                             ->label('TTE')
@@ -126,7 +128,7 @@ class PimpinanResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    // Tables\Actions\DeleteAction::make(),
                 ])
             ])
             ->bulkActions([

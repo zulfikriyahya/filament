@@ -16,9 +16,9 @@ use App\Filament\Resources\NegaraResource\RelationManagers\InstansiLainRelationM
 class NegaraResource extends Resource
 {
     protected static ?string $model = Negara::class;
-    protected static ?string $label = 'Negara';
+    protected static ?string $navigationLabel = 'Negara';
     protected static ?string $navigationGroup = 'Wilayah';
-    protected static ?int $sort = 0;
+    protected static ?int $navigationSort = 0;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

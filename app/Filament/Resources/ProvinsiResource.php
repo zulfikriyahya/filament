@@ -19,9 +19,9 @@ use App\Filament\Resources\ProvinsiResource\RelationManagers\InstansiLainRelatio
 class ProvinsiResource extends Resource
 {
     protected static ?string $model = Provinsi::class;
-    protected static ?string $label = 'Provinsi';
+    protected static ?string $navigationLabel = 'Provinsi';
     protected static ?string $navigationGroup = 'Wilayah';
-    protected static ?int $sort = 1;
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

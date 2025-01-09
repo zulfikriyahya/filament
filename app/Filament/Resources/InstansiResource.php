@@ -21,9 +21,9 @@ use App\Filament\Resources\InstansiResource\Pages;
 class InstansiResource extends Resource
 {
     protected static ?string $model = Instansi::class;
-    protected static ?string $label = 'Instansi';
+    protected static ?string $navigationLabel = 'Instansi';
     protected static ?string $navigationGroup = 'Instansi';
-    protected static ?int $sort = 1;
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -166,7 +166,6 @@ class InstansiResource extends Resource
             ]);
     }
 
-
     public static function table(Table $table): Table
     {
         return $table
@@ -236,7 +235,7 @@ class InstansiResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    // Tables\Actions\DeleteAction::make(),
                 ])
             ])
             ->bulkActions([
@@ -257,7 +256,7 @@ class InstansiResource extends Resource
     {
         return [
             'index' => Pages\ListInstansis::route('/'),
-            'create' => Pages\CreateInstansi::route('/create'),
+            // 'create' => Pages\CreateInstansi::route('/create'),
             // 'edit' => Pages\EditInstansi::route('/{record}/edit'),
         ];
     }

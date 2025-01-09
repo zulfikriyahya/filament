@@ -21,9 +21,9 @@ use App\Filament\Resources\InstansiLainResource\Pages;
 class InstansiLainResource extends Resource
 {
     protected static ?string $model = InstansiLain::class;
-    protected static ?string $label = 'Instansi Lain';
+    protected static ?string $navigationLabel = 'Instansi Lain';
     protected static ?string $navigationGroup = 'Instansi';
-    protected static ?int $sort = 2;
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

@@ -64,35 +64,6 @@ class InstansiLainRelationManager extends RelationManager
                         'sm' => 2,
                         'xl' => 3,
                     ]),
-                Section::make('Alamat Instansi')
-                    ->collapsed()
-                    ->schema([
-                        Forms\Components\TextInput::make('alamat')
-                            ->label('Alamat'),
-                        Forms\Components\Select::make('negara_id')
-                            ->label('Negara')
-                            ->relationship('negara', 'nama')
-                            ->required(),
-                        Forms\Components\Select::make('provinsi_id')
-                            ->label('Provinsi')
-                            ->relationship('provinsi', 'nama')
-                            ->required(),
-                        Forms\Components\Select::make('kabupaten_id')
-                            ->label('Kabupaten')
-                            ->relationship('kabupaten', 'nama')
-                            ->required(),
-                        Forms\Components\Select::make('kecamatan_id')
-                            ->label('Kecamatan')
-                            ->relationship('kecamatan', 'nama')
-                            ->required(),
-                        Forms\Components\Select::make('kelurahan_id')
-                            ->label('Kelurahan')
-                            ->relationship('kelurahan', 'nama')
-                            ->required(),
-                    ])->columns([
-                        'sm' => 2,
-                        'xl' => 3,
-                    ]),
                 Section::make('Kontak Instansi')
                     ->collapsed()
                     ->schema([
@@ -179,7 +150,7 @@ class InstansiLainRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

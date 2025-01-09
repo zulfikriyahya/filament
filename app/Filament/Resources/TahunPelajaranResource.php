@@ -5,38 +5,40 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
-use App\Models\Kelurahan;
 use Filament\Tables\Table;
+use App\Models\TahunPelajaran;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\KelurahanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\KelurahanResource\RelationManagers;
-use App\Filament\Resources\KelurahanResource\RelationManagers\InstansiLainRelationManager;
+use App\Filament\Resources\TahunPelajaranResource\Pages;
+use App\Filament\Resources\TahunPelajaranResource\RelationManagers;
 
-class KelurahanResource extends Resource
+class TahunPelajaranResource extends Resource
 {
-    protected static ?string $model = Kelurahan::class;
-    protected static ?string $navigationLabel = 'Kelurahan';
-    protected static ?string $navigationGroup = 'Wilayah';
-    protected static ?int $navigationSort = 4;
+    protected static ?string $model = TahunPelajaran::class;
+    protected static ?string $navigationGroup = 'Periode';
+    protected static ?string $navigationLabel = 'Tahun Pelajaran';
+    protected static ?int $navigationSort = 0;
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Kecamatan')
+                Forms\Components\Section::make('Tahun Pelajaran')
                     ->schema([
                         Forms\Components\TextInput::make('nama')
-                            ->label('Nama Kelurahan')
+                            ->label('Tahun Pelajaran')
+                            ->maxLength(9)
+                            ->minLength(9)
                             ->required(),
-                        Forms\Components\Select::make('kecamatan_id')
-                            ->label('Nama Kecamatan')
-                            ->relationship('kecamatan', 'nama')
-                            ->required()
-                            ->preload(10)
-                            ->searchable(),
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                'Aktif' => 'Aktif',
+                                'Nonaktif' => 'Nonaktif',
+                            ])
+                            ->required(),
                     ])
                     ->columns([
                         'sm' => 1,
@@ -50,9 +52,19 @@ class KelurahanResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
+                    ->label('Tahun Pelajaran')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kecamatan.nama')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Aktif' => 'success',
+                        'Nonaktif' => 'danger',
+                    })
+                    ->icon(fn(string $state): string => match ($state) {
+                        'Aktif' => 'heroicon-m-check',
+                        'Nonaktif' => 'heroicon-m-x-mark',
+                    })
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -68,12 +80,11 @@ class KelurahanResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
                 ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -81,16 +92,16 @@ class KelurahanResource extends Resource
     public static function getRelations(): array
     {
         return [
-            InstansiLainRelationManager::class,
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListKelurahans::route('/'),
-            'create' => Pages\CreateKelurahan::route('/create'),
-            'edit' => Pages\EditKelurahan::route('/{record}/edit'),
+            'index' => Pages\ListTahunPelajarans::route('/'),
+            'create' => Pages\CreateTahunPelajaran::route('/create'),
+            'edit' => Pages\EditTahunPelajaran::route('/{record}/edit'),
         ];
     }
 }
