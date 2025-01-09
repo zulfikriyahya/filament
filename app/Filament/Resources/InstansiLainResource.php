@@ -4,10 +4,17 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use App\Models\Provinsi;
 use Filament\Forms\Form;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use Filament\Tables\Table;
 use App\Models\InstansiLain;
 use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
 use Filament\Forms\Components\Section;
 use App\Filament\Resources\InstansiLainResource\Pages;
 
@@ -65,35 +72,104 @@ class InstansiLainResource extends Resource
                         'sm' => 2,
                         'xl' => 3,
                     ]),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 Section::make('Alamat Instansi')
+                    ->collapsed()
                     ->schema([
                         Forms\Components\TextInput::make('alamat')
                             ->label('Alamat'),
                         Forms\Components\Select::make('negara_id')
                             ->label('Negara')
                             ->relationship('negara', 'nama')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('provinsi_id', null);
+                                $set('kabupaten_id', null);
+                                $set('kecamatan_id', null);
+                                $set('kelurahan_id', null);
+                            })
                             ->required(),
                         Forms\Components\Select::make('provinsi_id')
                             ->label('Provinsi')
-                            ->relationship('provinsi', 'nama')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->options(
+                                fn(Get $get): Collection => Provinsi::query()
+                                    ->where('negara_id', $get('negara_id'))
+                                    ->pluck('nama', 'id')
+                            )
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('kabupaten_id', null);
+                                $set('kecamatan_id', null);
+                                $set('kelurahan_id', null);
+                            })
                             ->required(),
                         Forms\Components\Select::make('kabupaten_id')
                             ->label('Kabupaten')
-                            ->relationship('kabupaten', 'nama')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->options(
+                                fn(Get $get): Collection => Kabupaten::query()
+                                    ->where('provinsi_id', $get('provinsi_id'))
+                                    ->pluck('nama', 'id')
+                            )
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('kecamatan_id', null);
+                                $set('kelurahan_id', null);
+                            })
                             ->required(),
                         Forms\Components\Select::make('kecamatan_id')
                             ->label('Kecamatan')
-                            ->relationship('kecamatan', 'nama')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->options(
+                                fn(Get $get): Collection => Kecamatan::query()
+                                    ->where('kabupaten_id', $get('kabupaten_id'))
+                                    ->pluck('nama', 'id')
+                            )
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('kelurahan_id', null);
+                            })
                             ->required(),
                         Forms\Components\Select::make('kelurahan_id')
                             ->label('Kelurahan')
-                            ->relationship('kelurahan', 'nama')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->options(
+                                fn(Get $get): Collection => Kelurahan::query()
+                                    ->where('kecamatan_id', $get('kecamatan_id'))
+                                    ->pluck('nama', 'id')
+                            )
                             ->required(),
                     ])->columns([
                         'sm' => 2,
                         'xl' => 3,
                     ]),
                 Section::make('Kontak Instansi')
+                    ->collapsed()
                     ->schema([
                         Forms\Components\TextInput::make('telepon')
                             ->label('Telepon')

@@ -24,13 +24,22 @@ class KecamatanResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nama')
-                    ->label('Nama Kecamatan')
-                    ->required(),
-                Forms\Components\Select::make('kabupaten_id')
-                    ->label('Nama Kabupaten/Kota')
-                    ->relationship('kabupaten', 'nama')
-                    ->required(),
+                Forms\Components\Section::make('Kecamatan')
+                    ->schema([
+                        Forms\Components\TextInput::make('nama')
+                            ->label('Nama Kecamatan')
+                            ->required(),
+                        Forms\Components\Select::make('kabupaten_id')
+                            ->label('Nama Kabupaten/Kota')
+                            ->relationship('kabupaten', 'nama')
+                            ->required()
+                            ->preload(10)
+                            ->searchable(),
+                    ])
+                    ->columns([
+                        'sm' => 1,
+                        'xl' => 2,
+                    ])
             ]);
     }
 
